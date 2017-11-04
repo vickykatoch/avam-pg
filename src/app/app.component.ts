@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppLoggingService } from '@avam-logger/index';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  constructor(logger : AppLoggingService) {
+    logger.log('Hi There');
+  }
 }
