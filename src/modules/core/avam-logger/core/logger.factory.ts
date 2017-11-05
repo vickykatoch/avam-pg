@@ -1,3 +1,4 @@
+import { LogLevel } from './logging.models';
 import { ApplicationLogger } from "./logger.interface";
 import { LoggerAdapter } from "./logger.impl";
 
@@ -13,8 +14,8 @@ export class LoggerFactory {
     LoggerFactory._instance = this;
   }
 
-  getLogger(name: string) : ApplicationLogger {
-    return new LoggerAdapter(name);
+  getLogger(name: string, level?: LogLevel) : ApplicationLogger {
+    return new LoggerAdapter(name, level);
   }
 
   static get instance(): LoggerFactory {

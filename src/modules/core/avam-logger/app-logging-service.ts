@@ -1,6 +1,7 @@
+import { LoggerFactory } from './core/logger.factory';
 import { Injectable } from '@angular/core';
 import { LogOptions, ApplicationLogger, LogLevel } from './core/index';
-import { LoggingStore } from './core/localindex';
+import { LoggingStore } from './core/logging.store';
 
 @Injectable()
 export class AppLoggingService {
@@ -12,7 +13,7 @@ export class AppLoggingService {
   }
 
   getLogger(name: string, level?: LogLevel) : ApplicationLogger {
-    return LoggingStore.instance.getLogger(name, level);
+    return LoggerFactory.instance.getLogger(name,level);
   }
 
 }
