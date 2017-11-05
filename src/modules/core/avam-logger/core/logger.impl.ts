@@ -52,7 +52,11 @@ export class LoggerAdapter implements ApplicationLogger {
 
 
   private buildLoggingEvent(level: LogLevel,...messages: any[]) {
-    // const loggingEvent = new LoggingEvent(this.loggerName,Date.now(),level,messages);
-    // LoggingStore.instance.enqueue(loggingEvent);
+    const loggingEvent = new LoggingEvent();
+    loggingEvent.name = this.name;
+    loggingEvent.level = level;
+    loggingEvent.timestamp = Date.now();
+    loggingEvent.message = messages[0];
+    LoggingStore.instance.enqueue(loggingEvent);
   }
 }

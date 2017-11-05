@@ -1,3 +1,5 @@
+
+
 export enum LogLevel {
   ALL = 0,
   TRACE = 1,
@@ -11,8 +13,17 @@ export enum LogLevel {
 export interface LogOptions {
   appLogLevel : LogLevel;
   forcedLogLevel? : LogLevel;
-  appenders : string[];
+  logInterval : number;
+  appenders : AppenderOptions[];
   logServer? : any;
 }
 
+
+export interface AppenderOptions {
+  name : string;
+  format : string; // Text, json
+  pattern? : string;
+  logLevel? : LogLevel;
+  isDefferred? : boolean;
+}
 
