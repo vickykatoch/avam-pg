@@ -21,6 +21,10 @@ export class AppComponent {
       this.logger.error(`Hi Error : ${ctr}`);
       ctr++;
     },1000);
+    this.logger.time('Loading AppComponent');
+    setTimeout(()=> {
+      this.logger.timeEnd('Loading AppComponent');
+    }, 2500);
   }
 
   private getLogOptions(): LogOptions {

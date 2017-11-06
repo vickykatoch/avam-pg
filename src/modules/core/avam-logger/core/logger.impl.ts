@@ -5,6 +5,7 @@ import { LoggingStore } from './logging.store';
 
 export class LoggerAdapter implements ApplicationLogger {
   private moduleLogLevel: LogLevel;
+  private timer = new Map<string, number>();
 
   constructor(private loggerName: string, private level?: LogLevel) {
     this.moduleLogLevel = level ? level : LogLevel.ALL;
@@ -52,10 +53,19 @@ export class LoggerAdapter implements ApplicationLogger {
     // this.buildLoggingEvent(LogLevel.TRACE,undefined,messages);
   }
   time(name: string, level?: LogLevel): void {
-    // this.buildLoggingEvent(LogLevel.TRACE,undefined,messages);
+    if (LogLevel.INFO >= this.moduleLogLevel) {
+      if (!this.timer.has(name)) {
+        this.timer.set(name, Date.now());
+      }
+    }
   }
   timeEnd(name: string): void {
-    // this.buildLoggingEvent(LogLevel.TRACE,undefined,messages);
+    if (LogLevel.INFO >= this.moduleLogLevel) {
+      const startTime = this.timer.get(name);
+      const message = `Time taken by [${name}] : ${(Date.now()-startTime)/1000} seconds`;
+      this.timer.delete(name);
+      this.buildLoggingEvent(LogLevel.INFO,  message);
+    }
   }
   assert(expr: any): void {
     // this.buildLoggingEvent(LogLevel.TRACE,undefined,messages);

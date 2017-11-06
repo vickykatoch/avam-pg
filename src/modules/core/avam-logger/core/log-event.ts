@@ -6,6 +6,5 @@ export class LoggingEvent {
   groupName : string;
   timestamp : number;
   level : LogLevel;
-  errorMessage : string;
   message: string;
 }
