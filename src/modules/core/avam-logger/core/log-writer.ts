@@ -13,7 +13,6 @@ export abstract class LogWriter {
                   this.appenders.set(appender.name, appender);
             }
       }
-
       static getImmediateLogWriter(): LogWriter {
             return new ImmediateLogWriter();
       }
@@ -46,7 +45,7 @@ class DefferredLogger extends LogWriter {
                   .subscribe(this.writeEvents.bind(this));
       }
       addLogEntry(logEvent: LoggingEvent): void {
-            
+
             this.logEvents.push(logEvent);
       }
       private writeEvents() {

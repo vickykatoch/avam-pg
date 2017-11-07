@@ -10,6 +10,13 @@ export enum LogLevel {
   FATAL = 6,
   OFF =7
 }
+export interface LoggerStaticInfo {
+  appName : string;
+  user?: string;
+  region?: string;
+  env?: string;
+}
+
 export interface LogOptions {
   appLogLevel : LogLevel;
   forcedLogLevel? : LogLevel;
@@ -23,6 +30,7 @@ export interface AppenderOptions {
   name : string;
   format : string; // Text, json
   pattern? : string;
+  path? : string;
   logLevel? : LogLevel;
   isDefferred? : boolean;
 }

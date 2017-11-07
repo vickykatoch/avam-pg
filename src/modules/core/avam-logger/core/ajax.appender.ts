@@ -17,11 +17,7 @@ export class AjaxAppender implements Appender {
       writeLogs(loggingEvent: LoggingEvent[]): void {
             console.info(JSON.stringify(loggingEvent))
       }
-      clone(options: AppenderOptions): Appender {
-            return new AjaxAppender(options);
+      update(appenderOptions: AppenderOptions) : void {
+        this.options = appenderOptions;
       }
-      getFormattedMessage(loggingEvent: LoggingEvent): string {
-            throw new Error("Method not implemented.");
-      }
-
 }

@@ -35,14 +35,13 @@ export class ConsoleAppender implements Appender {
 
   }
 
-  clone(options: AppenderOptions): Appender {
-    return new ConsoleAppender(options);
+  update(appenderOptions: AppenderOptions) : void {
+    this.options = appenderOptions;
   }
 
-  getFormattedMessage(loggingEvent: LoggingEvent): string {
+  private getFormattedMessage(loggingEvent: LoggingEvent): string {
     return `[${loggingEvent.appName}-${loggingEvent.name}-${this.getFormattedTime(loggingEvent.timestamp)}] [${loggingEvent.level}] => ${loggingEvent.message}`;
   }
-
   private getFormattedTime(timestamp: number): string {
     return new Date(timestamp).toLocaleDateString();
   }

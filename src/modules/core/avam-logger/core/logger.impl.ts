@@ -18,7 +18,7 @@ export class LoggerAdapter implements ApplicationLogger {
   }
   trace(...messages: any[]): void {
     if (this.moduleLogLevel >= LogLevel.TRACE) {
-      this.buildLoggingEvent(LogLevel.TRACE, undefined, messages);
+      this.buildLoggingEvent(LogLevel.TRACE, messages);
     }
   }
   debug(...messages: any[]): void {
@@ -64,7 +64,7 @@ export class LoggerAdapter implements ApplicationLogger {
       const startTime = this.timer.get(name);
       const message = `Time taken by [${name}] : ${(Date.now()-startTime)/1000} seconds`;
       this.timer.delete(name);
-      this.buildLoggingEvent(LogLevel.INFO,  message);
+      this.buildLoggingEvent(LogLevel.INFO,  [message]);
     }
   }
   assert(expr: any): void {
@@ -75,7 +75,7 @@ export class LoggerAdapter implements ApplicationLogger {
   }
 
 
-  private buildLoggingEvent(level: LogLevel, ...messages: any[]) {
+  private buildLoggingEvent(level: LogLevel, messages: any[]) {
     const loggingEvent = new LoggingEvent();
     loggingEvent.name = this.name;
     loggingEvent.level = level;
@@ -83,7 +83,17 @@ export class LoggerAdapter implements ApplicationLogger {
     loggingEvent.message = this.buildMessage(messages);
     LoggingStore.instance.enqueue(loggingEvent);
   }
-  private buildMessage(...messages: any[]): string {
-    return messages[0];
+  private buildMessage(messages: any[]): string {
+    let message = "";
+    messages.forEach(msg=> {
+      if(msg instanceof  Error) {
+        message += `${msg.stack}, `;
+      } else if(typeof msg === "object") {
+        message += `${JSON.stringify(msg)}, `;
+      } else {
+        message += `${msg}, `;
+      }
+    });
+    return message.length > 0 ? message.slice(0,message.length-2) : "";
   }
 }

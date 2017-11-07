@@ -5,6 +5,5 @@ export interface Appender {
   name: string;
   writeLog(loggingEvent: LoggingEvent) : void;
   writeLogs(loggingEvent: LoggingEvent[]) : void;
-  clone(options: AppenderOptions) : Appender;
-  getFormattedMessage(loggingEvent: LoggingEvent) : string;
+  update(appenderOptions: AppenderOptions) : void;
 }

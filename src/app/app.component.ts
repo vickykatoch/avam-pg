@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AppLoggingService, LogOptions, ApplicationLogger, LogLevel } from '@avam-logger/index';
+import { AppLoggingService, LogOptions, ApplicationLogger, LogLevel, LoggerStaticInfo } from '@avam-logger/index';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +11,18 @@ export class AppComponent {
   logger: ApplicationLogger;
 
   constructor(loggingService: AppLoggingService) {
-    loggingService.init("AVAM-PLAYGROUND", this.getLogOptions());
+    let staticInfo : LoggerStaticInfo =  { appName : "AVAM-PLAYGROUND" };
+    loggingService.init(staticInfo, this.getLogOptions());
     this.logger = loggingService.getLogger('AppComponent', LogLevel.ALL);
+    staticInfo.user = "BK";
+    loggingService.init(staticInfo);
+    this.logger.info('Logger has been started');
+    staticInfo.region = "NA";
+    loggingService.init(staticInfo);
+    this.logger.info('Logger has been started');
+    staticInfo.env = "DEV";
+    loggingService.init(staticInfo);
+    this.logger.info('Logger has been started');
     this.logger.debug('Logger has been started');
     let ctr =0;
     setInterval(()=> {
@@ -25,6 +35,15 @@ export class AppComponent {
     setTimeout(()=> {
       this.logger.timeEnd('Loading AppComponent');
     }, 2500);
+
+    setTimeout(()=> {
+      try {
+        let x : any
+        console.log(x.q);
+      } catch(err) {
+        this.logger.error('Error while Loading Application',err);
+      }
+    }, 1000);
   }
 
   private getLogOptions(): LogOptions {
@@ -36,10 +55,11 @@ export class AppComponent {
         format: 'text',
         logLevel: LogLevel.ALL
       }, {
-        name: 'ajax',
+        name: 'worker',
         format: 'json',
         logLevel: LogLevel.ALL,
-        isDefferred : true
+        isDefferred : true,
+        path  : '/assets/workers/socket-loader.js'
       }],
       logServer: {
         type: 'socket',
