@@ -6,6 +6,9 @@
 
 var connnections = 0;
 self.addEventListener("connect", (evt) => {
+    debugger;
+    console.log(self);
+    console.log(self);
     var port = evt.ports[0];
     connnections++;
     port.addEventListener("message", (e) => {

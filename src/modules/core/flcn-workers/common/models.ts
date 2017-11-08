@@ -1,10 +1,18 @@
-export class WorkerMessage {
-  constructor(public type: string, public message : any ) {
-  }
+export interface Message {
+  type : string;
+  sender : MessageSender;
+  payload? : any;
 }
 
-export enum WorkerMessageType {
-  Connected = 0,
-  Initialize = 1,
-  Log = 2,
+export enum MessageSender {
+  MAIN_APP = 0,
+  MARKET_WATCH = 1,
+  MARKET_LADDER = 2,
+  BLOTTER = 3
+}
+
+export enum MessageType {
+  CONNECTED = 0,
+  INIT_WORKER = 1,
+  LOG = 2
 }
