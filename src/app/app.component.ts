@@ -59,7 +59,7 @@ export class AppComponent {
         format: 'json',
         logLevel: LogLevel.ALL,
         isDefferred : true,
-        path  : '/assets/workers/socket-loader.js'
+        path  : '/assets/workers/shared-logger.js'
       }],
       logServer: {
         type: 'socket',

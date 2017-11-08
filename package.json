@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "npm run compile-ww && ng serve",
-    "compile-ww" : "rollup -c rollup.config.js",
+    "compile-ww": "rollup -c rollup.config.js",
     "ng": "ng",
     "build": "ng build",
     "test": "ng test",
